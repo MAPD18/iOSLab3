@@ -21,6 +21,7 @@ class Engine {
         "∏" : Operation.Constant(.pi),
         "√" : Operation.Unary(sqrt),
         "±" : Operation.Unary({ -$0 }),
+        "sin" : Operation.Unary(sin),
         "cos" : Operation.Unary(cos),
         "%" : Operation.Binary({ $0/100 * $1 }),
         "×" : Operation.Binary({$0 * $1}),
@@ -51,6 +52,11 @@ class Engine {
             calculus = pending!.binaryOperation(pending!.firstNumber, calculus)
             pending = nil
         }
+    }
+    
+    func clear() {
+        calculus = 0
+        pending = nil
     }
     
     private struct PendingBinaryOperation {

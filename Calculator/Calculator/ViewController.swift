@@ -52,4 +52,42 @@ class ViewController: UIViewController {
         resultValue = engine.result
         
     }
+    
+    @IBAction func onDisplayActionPress(_ sender: UIButton) {
+        engine.setFirstNumber(first: resultValue)
+        let actionSymbol = sender.currentTitle!
+        doDisplayAction(symbol: actionSymbol)
+    }
+    
+    func doDisplayAction(symbol: String) {
+        if let action = displayActions[symbol] {
+            switch action {
+            case .Clear: 
+                userIsTyping = false
+                resultValue = 0
+                engine.clear()
+            case .Backspace:
+                var backspacedLabel = resultLabel.text!
+                if backspacedLabel.count > 1 {
+                    backspacedLabel = String(backspacedLabel.dropLast())
+                    resultLabel.text! = backspacedLabel
+                    userIsTyping = true
+                } else if backspacedLabel.count == 1 {
+                    resultLabel.text = "0"
+                    userIsTyping = false
+                }
+            }
+        }
+    }
+    
+    let displayActions: Dictionary = [
+        "AC" : DisplayAction.Clear,
+        "⌫" : DisplayAction.Backspace
+    ]
+    
+    enum DisplayAction {
+        case Clear
+        case Backspace
+    }
+    
 }
