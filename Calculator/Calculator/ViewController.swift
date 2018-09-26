@@ -10,11 +10,12 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var resultLabel: UILabel!
-    @IBOutlet weak var historicLabel: UILabel!
+    @IBOutlet weak private var resultLabel: UILabel!
+    @IBOutlet weak private var historicLabel: UILabel!
     
-    var userIsTyping = false
-    var resultValue: Double {
+    private var engine = Engine()
+    private var userIsTyping = false
+    private var resultValue: Double {
         get {
             return Double(resultLabel.text!)!
         }
@@ -28,7 +29,7 @@ class ViewController: UIViewController {
         // Do any additional setup after loading the view, typically from a nib.
     }
 
-    @IBAction func onDigitPress(_ sender: UIButton) {
+    @IBAction private func onDigitPress(_ sender: UIButton) {
         let digit = sender.currentTitle!
         
         if (userIsTyping) {
@@ -40,14 +41,15 @@ class ViewController: UIViewController {
         }
     }
     
-    @IBAction func onOperationPress(_ sender: UIButton) {
-        userIsTyping = false
-        let mathSymbol = sender.currentTitle!
-        if mathSymbol == "√" {
-            resultValue = sqrt(resultValue)
-        } else if mathSymbol == "∏" {
-            resultValue = .pi
+    @IBAction private func onOperationPress(_ sender: UIButton) {
+        if (userIsTyping) {
+            engine.setFirstNumber(first: resultValue)
+            userIsTyping = false
         }
+        
+        let mathSymbol = sender.currentTitle!
+        engine.doOperation(mathSymbol: mathSymbol)
+        resultValue = engine.result
         
     }
 }

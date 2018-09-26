@@ -10,13 +10,24 @@ import Foundation
 
 class Engine {
     
-}
-
-enum Operation: Int {
-    case sum = 12
-    case subtract = 13
-    case divide = 14
-    case multiply = 15
-    case equals = 16
-    case decimal = 11
+    private var calculus = 0.0
+    
+    func setFirstNumber(first: Double) {
+        calculus = first
+    }
+    
+    func doOperation(mathSymbol: String) {
+        switch mathSymbol {
+        case "√": calculus = sqrt(calculus)
+        case "∏": calculus = .pi
+        default:
+            break;
+        }
+    }
+    
+    var result : Double {
+        get {
+            return calculus
+        }
+    }
 }
