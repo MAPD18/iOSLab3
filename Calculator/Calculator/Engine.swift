@@ -8,22 +8,6 @@
 
 import Foundation
 
-func multiply(first: Double, second: Double) -> Double {
-        return first * second
-}
-
-func sum(first: Double, second: Double) -> Double {
-    return first + second
-}
-
-func subtract(first: Double, second: Double) -> Double {
-    return first - second
-}
-
-func divide(first: Double, second: Double) -> Double {
-    return first / second
-}
-
 class Engine {
     
     private var calculus = 0.0
@@ -36,11 +20,13 @@ class Engine {
     private var operations: Dictionary = [
         "∏" : Operation.Constant(.pi),
         "√" : Operation.Unary(sqrt),
+        "±" : Operation.Unary({ -$0 }),
         "cos" : Operation.Unary(cos),
-        "×" : Operation.Binary(multiply),
-        "÷" : Operation.Binary(divide),
-        "+" : Operation.Binary(sum),
-        "−" : Operation.Binary(subtract),
+        "%" : Operation.Binary({ $0/100 * $1 }),
+        "×" : Operation.Binary({$0 * $1}),
+        "÷" : Operation.Binary({$0 / $1}),
+        "+" : Operation.Binary({$0 + $1}),
+        "−" : Operation.Binary({$0 - $1}),
         "=" : Operation.Equals
     ]
     
@@ -67,12 +53,12 @@ class Engine {
         }
     }
     
-    struct PendingBinaryOperation {
+    private struct PendingBinaryOperation {
         var firstNumber : Double
         var binaryOperation : (Double, Double) -> Double
     }
     
-    enum Operation {
+    private enum Operation {
         case Constant(Double)
         case Unary((Double) -> Double)
         case Binary((Double, Double) -> Double)
