@@ -23,6 +23,7 @@ class ViewController: UIViewController {
             resultLabel.text = String(newValue)
         }
     }
+    private var errorIsShownInResultLabel = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,13 +49,27 @@ class ViewController: UIViewController {
         }
         
         let mathSymbol = sender.currentTitle!
-        engine.doOperation(mathSymbol: mathSymbol)
-        resultValue = engine.result
+        let responseStatus = engine.doOperation(mathSymbol: mathSymbol)
+        switch responseStatus {
+        case .CannotDivideByZero:
+            showError(message: "Cannot divide by zero")
+        case .CannotHandleImaginaryNumbers:
+            showError(message: "Cannot handle imaginary numbers")
+        case .InvalidOperation:
+            showError(message: "Invalid Operation")
+        case .Valid:
+            errorIsShownInResultLabel = false
+            resultValue = engine.result
+        }
         
     }
     
+    func showError(message: String) {
+        resultLabel.text = message
+        errorIsShownInResultLabel = true
+    }
+    
     @IBAction func onDisplayActionPress(_ sender: UIButton) {
-        engine.setFirstNumber(first: resultValue)
         let actionSymbol = sender.currentTitle!
         doDisplayAction(symbol: actionSymbol)
     }
@@ -68,9 +83,10 @@ class ViewController: UIViewController {
                 engine.clear()
             case .Backspace:
                 let currentLabel = resultLabel.text!
-                if currentLabel == "nan" || currentLabel == "inf" || currentLabel.count == 1 {
+                if errorIsShownInResultLabel || currentLabel.count == 1 {
                     resultLabel.text = "0"
                     userIsTyping = false
+                    engine.clear()
                 } else {
                     var backspacedLabel = resultLabel.text!
                     backspacedLabel = String(backspacedLabel.dropLast())
