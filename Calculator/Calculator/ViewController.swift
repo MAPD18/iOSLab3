@@ -67,14 +67,15 @@ class ViewController: UIViewController {
                 resultValue = 0
                 engine.clear()
             case .Backspace:
-                var backspacedLabel = resultLabel.text!
-                if backspacedLabel.count > 1 {
+                let currentLabel = resultLabel.text!
+                if currentLabel == "nan" || currentLabel == "inf" || currentLabel.count == 1 {
+                    resultLabel.text = "0"
+                    userIsTyping = false
+                } else {
+                    var backspacedLabel = resultLabel.text!
                     backspacedLabel = String(backspacedLabel.dropLast())
                     resultLabel.text! = backspacedLabel
                     userIsTyping = true
-                } else if backspacedLabel.count == 1 {
-                    resultLabel.text = "0"
-                    userIsTyping = false
                 }
             }
         }

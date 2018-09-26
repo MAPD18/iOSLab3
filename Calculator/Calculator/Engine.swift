@@ -20,7 +20,7 @@ class Engine {
     private var operations: Dictionary = [
         "∏" : Operation.Constant(.pi),
         "√" : Operation.Unary(sqrt),
-        "±" : Operation.Unary({ -$0 }),
+        "±" : Operation.Unary({ $0 == 0 ? 0 : -$0 }),
         "sin" : Operation.Unary(sin),
         "cos" : Operation.Unary(cos),
         "%" : Operation.Binary({ $0/100 * $1 }),
