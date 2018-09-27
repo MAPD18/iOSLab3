@@ -11,11 +11,9 @@ import UIKit
 class ViewController: UIViewController {
 
     @IBOutlet weak private var resultLabel: UILabel!
-    @IBOutlet weak private var historicLabel: UILabel!
     
     private var engine = Engine()
     private var userIsTyping = false
-    private var resultLabelHasDecimalDot = false
     private var errorIsShownInResultLabel = false
     private var userJustPressedAnOperationButton = false
     private var lastOperationSymbol = ""
@@ -43,10 +41,10 @@ class ViewController: UIViewController {
 
     @IBAction func onDecimalDotPress() {
         userJustPressedAnOperationButton = false
-        if !resultLabelHasDecimalDot && userIsTyping {
+        let resultText = resultLabel.text!
+        if !resultText.contains(".") {
             let currentText = resultLabel.text!
             resultLabel.text = currentText + "."
-            resultLabelHasDecimalDot = true
         }
     }
     
@@ -120,17 +118,13 @@ class ViewController: UIViewController {
     }
     
     func deleteLastDigit(currentLabel: inout String) {
-        let popLastDigit = currentLabel.popLast()
-        if (popLastDigit == ".") {
-            resultLabelHasDecimalDot = false
-        }
-        resultLabel.text! = currentLabel
+        resultLabel.text! = String(currentLabel.dropLast())
         engine.setFirstNumber(first: Double(currentLabel)!)
+        userIsTyping = true
     }
     
     func clearDisplay() {
         userIsTyping = false
-        resultLabelHasDecimalDot = false
         resultValue = 0
     }
     
