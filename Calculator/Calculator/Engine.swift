@@ -12,6 +12,7 @@ class Engine {
     
     private var calculus = 0.0
     private var pending: PendingBinaryOperation?
+    private var lastOperation: LastOperation?
     
     func setFirstNumber(first: Double) {
         calculus = first
@@ -23,7 +24,7 @@ class Engine {
         "±" : Operation.Unary({ $0 == 0 ? 0 : -$0 }),
         "sin" : Operation.Unary(sin),
         "cos" : Operation.Unary(cos),
-        "%" : Operation.Binary({ $0/100 * $1 }),
+        "%" : Operation.Unary({$0/100}),
         "×" : Operation.Binary({$0 * $1}),
         "÷" : Operation.Binary({$0 / $1}),
         "+" : Operation.Binary({$0 + $1}),
@@ -73,14 +74,45 @@ class Engine {
         return .Valid
     }
     
+    func replacePendingOperation(newOperatorSymbol: String) {
+        if pending != nil {
+            if let operation = operations[newOperatorSymbol] {
+                switch operation {
+                case .Binary(let binaryOperation):
+                    pending = PendingBinaryOperation(firstNumber: calculus, binaryOperation: binaryOperation, operationIdentifier: newOperatorSymbol)
+                default:
+                    return
+                }
+            }
+        }
+    }
+    
     func clear() {
         calculus = 0
         pending = nil
     }
     
+    func isBinaryOperator(mathSymbol: String) -> Bool {
+        if let operation = operations[mathSymbol] {
+            switch operation {
+            case .Binary(_):
+                return true
+            default:
+                return false
+            }
+        }
+        return false
+    }
+    
     private struct PendingBinaryOperation {
         var firstNumber : Double
         var binaryOperation : (Double, Double) -> Double
+        var operationIdentifier : String
+    }
+    
+    private struct LastOperation {
+        var firstNumber : Double
+        var secondNumber : Double
         var operationIdentifier : String
     }
     

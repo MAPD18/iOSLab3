@@ -323,7 +323,7 @@
                                                             <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
                                                         <connections>
-                                                            <action selector="onOperationPress:" destination="BYZ-38-t0r" eventType="touchUpInside" id="kke-Da-0j8"/>
+                                                            <action selector="onDecimalDotPress" destination="BYZ-38-t0r" eventType="touchUpInside" id="F8P-Lc-dQH"/>
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" tag="16" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="C6j-gS-Iqr">
