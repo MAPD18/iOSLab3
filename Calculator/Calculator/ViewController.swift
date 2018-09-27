@@ -1,10 +1,11 @@
 //
 //  ViewController.swift
-//  Calculator
+//  Calculator 1.0
 //
 //  Created by Rodrigo Silva on 2018-09-25.
-//  Copyright © 2018 Rodrigo Silva. All rights reserved.
-//
+//  Student ID 300993648
+//  
+//  Class responsible for Controlling the View using the business rules in Engine Model
 
 import UIKit
 
@@ -12,9 +13,9 @@ class ViewController: UIViewController {
 
     @IBOutlet weak private var resultLabel: UILabel!
     
-    private var engine = Engine()
+    private var engine = Engine() // Model
     private var userIsTyping = false
-    private var errorIsShownInResultLabel = false
+    private var errorIsBeingShownInResultLabel = false
     private var userJustPressedAnOperationButton = false
     private var lastOperationSymbol = ""
     private var resultValue: Double {
@@ -26,6 +27,7 @@ class ViewController: UIViewController {
         }
     }
 
+    // Function triggered by digits (0-9) pressed
     @IBAction private func onDigitPress(_ sender: UIButton) {
         userJustPressedAnOperationButton = false
         let digit = sender.currentTitle!
@@ -39,7 +41,8 @@ class ViewController: UIViewController {
         }
     }
 
-    @IBAction func onDecimalDotPress() {
+    // Function triggered by Decimal Dot (.) pressed
+    @IBAction private func onDecimalDotPress() {
         userJustPressedAnOperationButton = false
         let resultText = resultLabel.text!
         if !resultText.contains(".") {
@@ -48,27 +51,30 @@ class ViewController: UIViewController {
         }
     }
     
+    // Function triggered by operation (+,-,...) pressed
     @IBAction private func onOperationPress(_ sender: UIButton) {
-        if errorIsShownInResultLabel {
-            clearDisplay()
-            errorIsShownInResultLabel = false
+        // if there is an error being shown in the result label, the display is cleared and the operation is reset
+        if errorIsBeingShownInResultLabel {
+            clearResultLabel()
+            errorIsBeingShownInResultLabel = false
             return
         }
         
         let mathSymbol = sender.currentTitle!
         
-        if userJustPressedAnOperationButton && engine.isBinaryOperator(mathSymbol: lastOperationSymbol) && engine.isBinaryOperator(mathSymbol: mathSymbol) {
-            if lastOperationSymbol == mathSymbol {
+        // if user presses the operation buttons more than once
+        if userPressedBinaryOperationButtonsMoreThanOnce(mathSymbol: mathSymbol) {
+            if lastOperationSymbol == mathSymbol { // user is pressing the same operator, should ignore
                 return
-            } else {
-                engine.setFirstNumber(first: resultValue)
+            } else { // user is pressing different operators, should replace pending operation in Engine
+                engine.setCurrentValue(newValue: resultValue)
                 userIsTyping = false
-                engine.replacePendingOperation(newOperatorSymbol: mathSymbol)
+                engine.replacePendingBinaryOperation(newOperatorSymbol: mathSymbol)
                 return
             }
         } else {
             if userIsTyping {
-                engine.setFirstNumber(first: resultValue)
+                engine.setCurrentValue(newValue: resultValue)
                 userIsTyping = false
             }
             
@@ -81,7 +87,7 @@ class ViewController: UIViewController {
             case .InvalidOperation:
                 showError(message: "Invalid Operation")
             case .Valid:
-                errorIsShownInResultLabel = false
+                errorIsBeingShownInResultLabel = false
                 resultValue = engine.result
             }
         }
@@ -89,27 +95,34 @@ class ViewController: UIViewController {
         lastOperationSymbol = mathSymbol
     }
     
-    @IBAction func onDisplayActionPress(_ sender: UIButton) {
+    private func userPressedBinaryOperationButtonsMoreThanOnce(mathSymbol: String) -> Bool {
+        return userJustPressedAnOperationButton && engine.isBinaryOperator(mathSymbol: lastOperationSymbol) && engine.isBinaryOperator(mathSymbol: mathSymbol)
+    }
+    
+    // Function triggered when the display action buttons "AC" or "⌫" are pressed
+    @IBAction private func onDisplayActionPress(_ sender: UIButton) {
         userJustPressedAnOperationButton = false
         let actionSymbol = sender.currentTitle!
         doDisplayAction(symbol: actionSymbol)
     }
     
-    func showError(message: String) {
+    // Shows an error message in the resultLabel
+    private func showError(message: String) {
         resultLabel.text = message
-        errorIsShownInResultLabel = true
+        errorIsBeingShownInResultLabel = true
     }
     
-    func doDisplayAction(symbol: String) {
+    // Does Clear of Backspace actions to the resultLabel
+    private func doDisplayAction(symbol: String) {
         if let action = displayActions[symbol] {
             switch action {
             case .Clear: 
-                clearDisplay()
+                clearResultLabel()
                 engine.clear()
             case .Backspace:
                 var currentLabel = resultLabel.text!
-                if errorIsShownInResultLabel || currentLabel.count == 1 {
-                    clearDisplay()
+                if errorIsBeingShownInResultLabel || currentLabel.count == 1 {
+                    clearResultLabel()
                 } else {
                     deleteLastDigit(currentLabel: &currentLabel)
                 }
@@ -117,25 +130,28 @@ class ViewController: UIViewController {
         }
     }
     
-    func deleteLastDigit(currentLabel: inout String) {
+    // Deletes last digit of the resultLabel and updates the currentValue inside Engine
+    private func deleteLastDigit(currentLabel: inout String) {
         resultLabel.text! = String(currentLabel.dropLast())
-        engine.setFirstNumber(first: Double(currentLabel)!)
+        engine.setCurrentValue(newValue: Double(currentLabel)!)
         userIsTyping = true
     }
     
-    func clearDisplay() {
+    // Clears the resultLabel UIView and resets the resultValue to zero
+    private func clearResultLabel() {
         userIsTyping = false
         resultValue = 0
     }
     
-    let displayActions: Dictionary = [
+    // Dictionary linking the characters to it's relative enum DisplayAction
+    private let displayActions: Dictionary = [
         "AC" : DisplayAction.Clear,
         "⌫" : DisplayAction.Backspace,
     ]
     
-    enum DisplayAction {
+    // Enum for describing the possible display action buttons
+    private enum DisplayAction {
         case Clear
         case Backspace
     }
-    
 }
