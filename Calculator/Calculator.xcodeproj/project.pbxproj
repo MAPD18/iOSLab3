@@ -13,7 +13,6 @@
 		F6700A27215B168500574593 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F6700A26215B168500574593 /* Assets.xcassets */; };
 		F6700A2A215B168500574593 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6700A28215B168500574593 /* LaunchScreen.storyboard */; };
 		F6700A34215B26D200574593 /* Engine.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6700A33215B26D200574593 /* Engine.swift */; };
-		F6700A38215D704100574593 /* calculator(1).png in Resources */ = {isa = PBXBuildFile; fileRef = F6700A37215D704100574593 /* calculator(1).png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -25,7 +24,6 @@
 		F6700A29215B168500574593 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F6700A2B215B168500574593 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F6700A33215B26D200574593 /* Engine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Engine.swift; sourceTree = "<group>"; };
-		F6700A37215D704100574593 /* calculator(1).png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "calculator(1).png"; path = "../../../../../../Downloads/calculator(1).png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +56,6 @@
 		F6700A1E215B168300574593 /* Calculator */ = {
 			isa = PBXGroup;
 			children = (
-				F6700A37215D704100574593 /* calculator(1).png */,
 				F6700A33215B26D200574593 /* Engine.swift */,
 				F6700A1F215B168300574593 /* AppDelegate.swift */,
 				F6700A21215B168300574593 /* ViewController.swift */,
@@ -128,7 +125,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F6700A38215D704100574593 /* calculator(1).png in Resources */,
 				F6700A2A215B168500574593 /* LaunchScreen.storyboard in Resources */,
 				F6700A27215B168500574593 /* Assets.xcassets in Resources */,
 				F6700A25215B168300574593 /* Main.storyboard in Resources */,
@@ -293,6 +289,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2BULHRS882;
 				INFOPLIST_FILE = Calculator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -311,6 +308,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 2BULHRS882;
 				INFOPLIST_FILE = Calculator/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
