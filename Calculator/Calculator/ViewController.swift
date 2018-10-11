@@ -31,6 +31,7 @@ class ViewController: UIViewController {
     public var digitsTextColor = ""
     public var opetationsTextColor = ""
     
+    // Dictionary of colors, from string to UIColor
     private var colors : Dictionary = [
         "Red" : UIColor.red,
         "Yellow" : UIColor.yellow,
@@ -48,6 +49,7 @@ class ViewController: UIViewController {
     let BUTTON_TAG_DIGIT = 458
     let BUTTON_TAG_OPERATION = 1452
     
+    // Function that goes through every UIVies in the screen updating color according to the user selection
     private func updateColors(views: [UIView]) {
         for view in views {
             if let button = view as? UIButton {
