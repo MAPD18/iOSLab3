@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F6439A49216FAE01001C2220 /* OptionsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6439A48216FAE01001C2220 /* OptionsViewController.swift */; };
 		F6700A20215B168300574593 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6700A1F215B168300574593 /* AppDelegate.swift */; };
 		F6700A22215B168300574593 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6700A21215B168300574593 /* ViewController.swift */; };
 		F6700A25215B168300574593 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F6700A23215B168300574593 /* Main.storyboard */; };
@@ -16,6 +17,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F6439A48216FAE01001C2220 /* OptionsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OptionsViewController.swift; sourceTree = "<group>"; };
 		F6700A1C215B168300574593 /* Calculator.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Calculator.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F6700A1F215B168300574593 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		F6700A21215B168300574593 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -63,6 +65,7 @@
 				F6700A26215B168500574593 /* Assets.xcassets */,
 				F6700A28215B168500574593 /* LaunchScreen.storyboard */,
 				F6700A2B215B168500574593 /* Info.plist */,
+				F6439A48216FAE01001C2220 /* OptionsViewController.swift */,
 			);
 			path = Calculator;
 			sourceTree = "<group>";
@@ -139,6 +142,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F6700A22215B168300574593 /* ViewController.swift in Sources */,
+				F6439A49216FAE01001C2220 /* OptionsViewController.swift in Sources */,
 				F6700A34215B26D200574593 /* Engine.swift in Sources */,
 				F6700A20215B168300574593 /* AppDelegate.swift in Sources */,
 			);

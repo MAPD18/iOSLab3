@@ -26,6 +26,44 @@ class ViewController: UIViewController {
             resultLabel.text = String(newValue)
         }
     }
+    
+    public var backgroundColor = ""
+    public var digitsTextColor = ""
+    public var opetationsTextColor = ""
+    
+    private var colors : Dictionary = [
+        "Red" : UIColor.red,
+        "Yellow" : UIColor.yellow,
+        "Green" : UIColor.green,
+        "Blue" : UIColor.blue,
+        "Black" : UIColor.black
+    ]
+    
+    override func viewDidLoad() {
+        if !backgroundColor.isEmpty {
+            updateColors(views: self.view.subviews)
+        }
+    }
+    
+    let BUTTON_TAG_DIGIT = 458
+    let BUTTON_TAG_OPERATION = 1452
+    
+    private func updateColors(views: [UIView]) {
+        for view in views {
+            if let button = view as? UIButton {
+                if button.tag == BUTTON_TAG_DIGIT {
+                    button.setTitleColor(colors[digitsTextColor], for: .normal)
+                } else if button.tag == BUTTON_TAG_OPERATION {
+                    button.backgroundColor = colors[backgroundColor]
+                    button.setTitleColor(colors[opetationsTextColor], for: .normal)
+                }
+            } else if let label = view as? UILabel {
+                label.backgroundColor = colors[backgroundColor]
+            } else if let stackView = view as? UIStackView {
+                updateColors(views: stackView.subviews)
+            }
+        }
+    }
 
     // Function triggered by digits (0-9) pressed
     @IBAction private func onDigitPress(_ sender: UIButton) {
